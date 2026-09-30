@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "project-movies": {
+    "movies-playground": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -54,12 +54,15 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "project-movies:build:production"
+              "buildTarget": "movies-project:build:production"
             },
             "development": {
-              "buildTarget": "project-movies:build:development"
+              "buildTarget": "movies-project:build:development"
             }
           },
           "defaultConfiguration": "development"
