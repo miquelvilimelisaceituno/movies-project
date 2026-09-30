@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "movies-playground": {
+    "movies-project": {
       "projectType": "application",
       "schematics": {},
       "root": "",
