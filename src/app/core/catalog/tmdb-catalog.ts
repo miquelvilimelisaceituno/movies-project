@@ -10,7 +10,7 @@ import {
   PersonDetails,
   PersonSummary,
   SearchQuery,
-} from '../models/tmdb-models';
+} from './models/movie';
 
 @Service()
 export class TmdbCatalog {
