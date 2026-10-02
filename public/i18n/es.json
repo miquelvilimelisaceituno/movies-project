@@ -1,0 +1,17 @@
+{
+  "explore": {
+    "pageTitle": "Explorar películas · Movies",
+    "title": "Explorar películas",
+    "popular": "Películas populares",
+    "loading": "Cargando películas…",
+    "error": "No se han podido cargar las películas.",
+    "retry": "Reintentar",
+    "empty": "No hay películas que mostrar."
+  },
+  "movieCard": {
+    "noPoster": "Póster no disponible",
+    "noDate": "Fecha desconocida",
+    "rating": "Puntuación TMDB",
+    "noVotes": "Sin votos"
+  }
+}
