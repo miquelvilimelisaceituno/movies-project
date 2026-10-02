@@ -1,0 +1,25 @@
+@let movie = this.movie();
+@let poster = movie.poster_path | tmdbImage;
+
+<article class="card">
+  @if (poster) {
+    <img class="poster" [src]="poster" alt="" width="342" height="513" loading="lazy" />
+  } @else {
+    <div class="poster poster--missing">{{ texts.noPoster }}</div>
+  }
+
+  <div class="body">
+    <h3 class="title">
+      <a class="link" [routerLink]="['/peliculas', movie.id]">{{ movie.title }}</a>
+    </h3>
+    <p class="meta">{{ (movie.release_date | year) ?? texts.noDate }}</p>
+    <p class="meta">
+      {{ texts.rating }}:
+      @if (movie.vote_count > 0) {
+        <strong>{{ movie.vote_average | number: '1.1-1' }}</strong>
+      } @else {
+        {{ texts.noVotes }}
+      }
+    </p>
+  </div>
+</article>
