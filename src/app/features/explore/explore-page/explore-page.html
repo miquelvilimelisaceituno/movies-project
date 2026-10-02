@@ -1,0 +1,25 @@
+<section class="explore" aria-labelledby="explore-title">
+  <h1 id="explore-title">{{ texts.title }}</h1>
+  <h2 class="subtitle">{{ texts.popular }}</h2>
+
+  @if (movies.isLoading()) {
+    <p role="status">{{ texts.loading }}</p>
+  } @else if (movies.error()) {
+    <div class="feedback" role="alert">
+      <p>{{ texts.error }}</p>
+      <button type="button" (click)="movies.reload()">{{ texts.retry }}</button>
+    </div>
+  } @else if (movies.hasValue()) {
+    @let results = movies.value().results;
+
+    @if (results.length === 0) {
+      <p role="status">{{ texts.empty }}</p>
+    } @else {
+      <ul class="grid">
+        @for (movie of results; track movie.id) {
+          <li><app-movie-card [movie]="movie" /></li>
+        }
+      </ul>
+    }
+  }
+</section>
