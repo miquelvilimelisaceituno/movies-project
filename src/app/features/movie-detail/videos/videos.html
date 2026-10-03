@@ -1,0 +1,11 @@
+<section aria-labelledby="videos-title">
+  <h2 id="videos-title">{{ texts.title }}</h2>
+
+  @if (trailer(); as trailer) {
+    <a class="watch" [href]="youtubeUrl + trailer.key" target="_blank" rel="noopener">
+      {{ texts.watch }} <span class="new-tab">{{ texts.newTab }}</span>
+    </a>
+  } @else {
+    <p>{{ texts.noTrailer }}</p>
+  }
+</section>

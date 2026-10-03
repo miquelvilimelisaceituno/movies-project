@@ -13,5 +13,37 @@
     "noDate": "Fecha desconocida",
     "rating": "Puntuación TMDB",
     "noVotes": "Sin votos"
+  },
+  "movie": {
+    "pageTitle": "Ficha de película · Movies",
+    "loading": "Cargando película…",
+    "error": "No se ha podido cargar la película.",
+    "retry": "Reintentar",
+    "invalidId": "La dirección no corresponde a ninguna película.",
+    "backToExplore": "Volver a explorar",
+    "notAvailable": "No disponible",
+    "noPoster": "Póster no disponible",
+    "originalTitle": "Título original",
+    "releaseDate": "Estreno",
+    "runtime": "Duración",
+    "minutes": "min",
+    "genres": "Géneros",
+    "rating": "Puntuación TMDB",
+    "votes": "votos",
+    "noVotes": "Sin votos",
+    "overview": "Sinopsis"
+  },
+  "credits": {
+    "cast": "Reparto",
+    "directors": "Dirección",
+    "noCast": "Reparto no disponible",
+    "noDirectors": "Dirección no disponible",
+    "noPhoto": "Foto no disponible"
+  },
+  "videos": {
+    "title": "Tráiler",
+    "watch": "Ver el tráiler en YouTube",
+    "newTab": "(se abre en una pestaña nueva)",
+    "noTrailer": "Tráiler no disponible"
   }
 }
