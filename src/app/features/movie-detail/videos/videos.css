@@ -1,0 +1,10 @@
+.watch {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+}
+
+.new-tab {
+  font-size: 0.875rem;
+}

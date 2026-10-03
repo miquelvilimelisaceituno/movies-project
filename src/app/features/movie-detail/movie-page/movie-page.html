@@ -1,0 +1,83 @@
+<div class="movie-page">
+  @if (movieId() === undefined) {
+    <div class="feedback" role="alert">
+      <p>{{ texts.invalidId }}</p>
+      <a routerLink="/explorar">{{ texts.backToExplore }}</a>
+    </div>
+  } @else if (movie.isLoading()) {
+    <p role="status">{{ texts.loading }}</p>
+  } @else if (movie.error()) {
+    <div class="feedback" role="alert">
+      <p>{{ texts.error }}</p>
+      <button type="button" (click)="movie.reload()">{{ texts.retry }}</button>
+      <a routerLink="/explorar">{{ texts.backToExplore }}</a>
+    </div>
+  } @else if (movie.hasValue()) {
+    @let details = movie.value();
+    @let poster = details.poster_path | tmdbImage: 'w500';
+
+    <article class="movie" aria-labelledby="movie-title">
+      <header class="hero">
+        @if (poster) {
+          <img class="poster" [src]="poster" alt="" width="500" height="750" />
+        } @else {
+          <div class="poster poster--missing">{{ texts.noPoster }}</div>
+        }
+
+        <div>
+          <h1 id="movie-title">{{ details.title }}</h1>
+
+          @if (details.original_title !== details.title) {
+            <p>{{ texts.originalTitle }}: {{ details.original_title }}</p>
+          }
+          @if (details.tagline) {
+            <p class="tagline">{{ details.tagline }}</p>
+          }
+
+          <dl class="facts">
+            <dt>{{ texts.releaseDate }}</dt>
+            <dd>{{ (details.release_date | date: 'dd/MM/yyyy') ?? texts.notAvailable }}</dd>
+
+            <dt>{{ texts.runtime }}</dt>
+            <dd>
+              @if (details.runtime) {
+                {{ details.runtime }} {{ texts.minutes }}
+              } @else {
+                {{ texts.notAvailable }}
+              }
+            </dd>
+
+            <dt>{{ texts.genres }}</dt>
+            <dd>
+              <ul class="genres">
+                @for (genre of details.genres; track genre.id) {
+                  <li>{{ genre.name }}</li>
+                } @empty {
+                  <li>{{ texts.notAvailable }}</li>
+                }
+              </ul>
+            </dd>
+
+            <dt>{{ texts.rating }}</dt>
+            <dd>
+              @if (details.vote_count > 0) {
+                <strong>{{ details.vote_average | number: '1.1-1' }}</strong>
+                ({{ details.vote_count }} {{ texts.votes }})
+              } @else {
+                {{ texts.noVotes }}
+              }
+            </dd>
+          </dl>
+        </div>
+      </header>
+
+      <section aria-labelledby="overview-title">
+        <h2 id="overview-title">{{ texts.overview }}</h2>
+        <p>{{ details.overview || texts.notAvailable }}</p>
+      </section>
+
+      <app-credits [cast]="details.credits.cast" [crew]="details.credits.crew" />
+      <app-videos [videos]="details.videos.results" />
+    </article>
+  }
+</div>

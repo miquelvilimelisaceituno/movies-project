@@ -1,0 +1,41 @@
+<section aria-labelledby="directors-title">
+  <h2 id="directors-title">{{ texts.directors }}</h2>
+
+  @if (directors().length === 0) {
+    <p>{{ texts.noDirectors }}</p>
+  } @else {
+    <ul class="people">
+      @for (person of directors(); track person.credit_id) {
+        <li class="person">
+          <a [routerLink]="['/personas', person.id]">{{ person.name }}</a>
+        </li>
+      }
+    </ul>
+  }
+</section>
+
+<section aria-labelledby="cast-title">
+  <h2 id="cast-title">{{ texts.cast }}</h2>
+
+  @if (mainCast().length === 0) {
+    <p>{{ texts.noCast }}</p>
+  } @else {
+    <ul class="people">
+      @for (person of mainCast(); track person.credit_id) {
+        @let photo = person.profile_path | tmdbImage: 'w185';
+
+        <li class="person">
+          @if (photo) {
+            <img class="photo" [src]="photo" alt="" width="185" height="278" loading="lazy" />
+          } @else {
+            <div class="photo photo--missing">{{ texts.noPhoto }}</div>
+          }
+          <a [routerLink]="['/personas', person.id]">{{ person.name }}</a>
+          @if (person.character) {
+            <span class="character">{{ person.character }}</span>
+          }
+        </li>
+      }
+    </ul>
+  }
+</section>
