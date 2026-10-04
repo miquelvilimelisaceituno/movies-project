@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 import { Session } from '../../../core/auth/session';
-import { passwordsMatch } from '../passwords-match';
+import { passwordsMatch, PASSWORDS_MISMATCH } from '../passwords-match';
 import { AuthError } from '../../../core/auth/auth-error';
 
 /** Firebase rejects passwords shorter than 6 characters. */
@@ -11,7 +11,7 @@ const MIN_PASSWORD_LENGTH = 6;
 const MIN_NAME_LENGTH = 2;
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   selector: 'app-register-page',
   styleUrl: './register-page.css',
   templateUrl: './register-page.html',
@@ -58,5 +58,15 @@ export class RegisterPage {
     } finally {
       this.submitting.set(false);
     }
+  };
+
+  /** A field shows its error only after the user has left it (or tried to submit). */
+  protected showError(control: AbstractControl): boolean {
+    return control.invalid && control.touched;
+  }
+
+  /** The mismatch is a group error, but it is shown under the confirmation field. */
+  protected showPasswordsMismatch(): boolean {
+    return this.form.hasError(PASSWORDS_MISMATCH) && this.form.controls.confirmPassword.touched;
   }
 }
