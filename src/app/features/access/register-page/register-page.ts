@@ -1,0 +1,62 @@
+import { Component, inject, signal } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { Session } from '../../../core/auth/session';
+import { passwordsMatch } from '../passwords-match';
+import { AuthError } from '../../../core/auth/auth-error';
+
+/** Firebase rejects passwords shorter than 6 characters. */
+const MIN_PASSWORD_LENGTH = 6;
+const MIN_NAME_LENGTH = 2;
+
+@Component({
+  imports: [ReactiveFormsModule],
+  selector: 'app-register-page',
+  styleUrl: './register-page.css',
+  templateUrl: './register-page.html',
+})
+export class RegisterPage {
+  private readonly session = inject(Session);
+  private readonly router = inject(Router);
+  private readonly formBuilder = inject(NonNullableFormBuilder);
+
+  protected readonly form = this.formBuilder.group(
+    {
+      displayName: ['', [Validators.required, Validators.minLength(MIN_NAME_LENGTH)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
+      confirmPassword: ['', Validators.required],
+    },
+    { validators: passwordsMatch('password', 'confirmPassword') },
+  );
+
+  /** True while waiting for Firebase, to avoid double submits. */
+  protected readonly submitting = signal(false);
+
+  /** i18n key of the error to show, or null when there is none. */
+  protected readonly errorKey = signal<string | null>(null);
+
+  protected async submit(): Promise<void> {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const { displayName, email, password } = this.form.getRawValue();
+    this.submitting.set(true);
+    this.errorKey.set(null);
+
+    try {
+      await this.session.register(email, password, displayName.trim());
+      await this.router.navigateByUrl('/');
+    } catch (error) {
+      if (!(error instanceof AuthError)) {
+        throw error;
+      }
+      this.errorKey.set(error.key);
+    } finally {
+      this.submitting.set(false);
+    }
+  }
+}
