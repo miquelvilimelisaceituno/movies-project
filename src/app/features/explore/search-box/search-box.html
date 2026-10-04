@@ -1,0 +1,13 @@
+<form class="search" role="search" (submit)="submit($event)">
+  <label for="search-input">{{ texts.label }}</label>
+  <div class="row">
+    <input
+      id="search-input"
+      type="search"
+      autocomplete="off"
+      [placeholder]="texts.placeholder"
+      [formControl]="control"
+    />
+    <button type="submit">{{ texts.submit }}</button>
+  </div>
+</form>

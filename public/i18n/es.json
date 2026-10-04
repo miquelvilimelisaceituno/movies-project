@@ -8,6 +8,33 @@
     "retry": "Reintentar",
     "empty": "No hay películas que mostrar."
   },
+  "searchBox": {
+    "label": "Buscar por título",
+    "placeholder": "Ej.: Alien",
+    "submit": "Buscar"
+  },
+  "filters": {
+    "legend": "Filtros",
+    "genre": "Género",
+    "allGenres": "Todos",
+    "minRating": "Puntuación TMDB mínima",
+    "anyRating": "Cualquiera",
+    "orMore": "o más",
+    "sort": "Ordenar por",
+    "sortOptions": {
+      "popularity.desc": "Más populares",
+      "vote_average.desc": "Mejor valoradas",
+      "primary_release_date.desc": "Más recientes"
+    },
+    "reset": "Restablecer filtros"
+  },
+  "pagination": {
+    "label": "Paginación",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página",
+    "of": "de"
+  },
   "movieCard": {
     "noPoster": "Póster no disponible",
     "noDate": "Fecha desconocida",
