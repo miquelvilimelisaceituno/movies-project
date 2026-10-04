@@ -2,11 +2,14 @@
   "explore": {
     "pageTitle": "Explorar películas · Movies",
     "title": "Explorar películas",
-    "popular": "Películas populares",
+    "discover": "Películas",
+    "resultsFor": "Resultados para",
+    "filtersDisabled": "Los filtros no se aplican al buscar por título.",
     "loading": "Cargando películas…",
     "error": "No se han podido cargar las películas.",
     "retry": "Reintentar",
-    "empty": "No hay películas que mostrar."
+    "empty": "No hay películas que mostrar.",
+    "noResults": "No hay películas que coincidan con la búsqueda."
   },
   "searchBox": {
     "label": "Buscar por título",
