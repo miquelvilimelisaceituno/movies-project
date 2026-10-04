@@ -18,7 +18,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_all_routes_forward_to_fixed_tmdb_host(self):
         routes = [
-            "discover/movie?page=2&with_genres=878&vote_average.gte=7",
+            "discover/movie?page=2&with_genres=878&vote_average.gte=7&vote_count.gte=100",
             "search/movie?query=Alien&page=1",
             "search/person?query=Scott",
             "search/keyword?query=space",
@@ -55,6 +55,7 @@ class CatalogTests(unittest.TestCase):
             "discover/movie?page=0", "discover/movie?page=501", "discover/movie?page=abc",
             "discover/movie?page=1&page=2", "discover/movie?vote_average.gte=11",
             "discover/movie?vote_average.gte=nan", "discover/movie?with_genres=-1",
+            "discover/movie?vote_count.gte=-1", "discover/movie?vote_count.gte=abc",
             "discover/movie?sort_by=unknown", "discover/movie?url=https://example.com",
             "search/movie?query=", "search/movie", "search/movie?query=x&with_genres=1",
             "movie/0", "movie/1?api_key=secret", "movie/1?append_to_response=account_states",
