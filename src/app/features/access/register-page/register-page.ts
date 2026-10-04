@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, afterNextRender, ElementRef, Injector } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -21,6 +21,9 @@ export class RegisterPage {
   private readonly router = inject(Router);
   private readonly formBuilder = inject(NonNullableFormBuilder);
 
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly injector = inject(Injector);
+
   protected readonly form = this.formBuilder.group(
     {
       displayName: ['', [Validators.required, Validators.minLength(MIN_NAME_LENGTH)]],
@@ -40,6 +43,7 @@ export class RegisterPage {
   protected async submit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.focusFirstInvalidField();
       return;
     }
 
@@ -68,5 +72,13 @@ export class RegisterPage {
   /** The mismatch is a group error, but it is shown under the confirmation field. */
   protected showPasswordsMismatch(): boolean {
     return this.form.hasError(PASSWORDS_MISMATCH) && this.form.controls.confirmPassword.touched;
+  }
+
+  /** Moves focus to the first field with an error, once the errors are rendered. */
+  private focusFirstInvalidField(): void {
+    afterNextRender(
+      () => this.host.nativeElement.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus(),
+      { injector: this.injector },
+    );
   }
 }
