@@ -4,12 +4,12 @@ import { Router, RouterLink } from '@angular/router';
 import { PATHS } from '../../../core/config/paths';
 import { TEXTS } from '../../../core/config/texts';
 import { AuthErrorKey } from '../../../core/auth/auth-error-key';
-
+import { GoogleSignIn } from '../google-sign-in/google-sign-in';
 import { AuthError } from '../../../core/auth/auth-error';
 import { Session } from '../../../core/auth/session';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, GoogleSignIn],
   selector: 'app-login-page',
   styleUrl: './login-page.css',
   templateUrl: './login-page.html',

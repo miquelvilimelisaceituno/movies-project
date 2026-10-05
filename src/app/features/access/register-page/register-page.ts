@@ -3,7 +3,7 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators, AbstractContro
 import { Router, RouterLink } from '@angular/router';
 import { PATHS } from '../../../core/config/paths';
 import { TEXTS } from '../../../core/config/texts';
-
+import { GoogleSignIn } from '../google-sign-in/google-sign-in';
 import { Session } from '../../../core/auth/session';
 import { passwordsMatch, PASSWORDS_MISMATCH } from '../passwords-match';
 import { AuthError } from '../../../core/auth/auth-error';
@@ -16,7 +16,7 @@ const MIN_PASSWORD_LENGTH = 6;
 const MIN_NAME_LENGTH = 2;
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, GoogleSignIn],
   selector: 'app-register-page',
   styleUrl: './register-page.css',
   templateUrl: './register-page.html',

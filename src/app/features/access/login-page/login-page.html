@@ -51,6 +51,8 @@
     </button>
   </form>
 
+  <app-google-sign-in />
+
   <p class="login__switch">
     {{ texts.login.noAccount }}
     <a [routerLink]="['/', paths.register]">{{ texts.login.goToRegister }}</a>
