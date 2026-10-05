@@ -1,6 +1,7 @@
 import { afterNextRender, Component, ElementRef, inject, Injector, signal } from '@angular/core';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { PATHS } from '../../../core/config/paths';
 
 import { AuthError } from '../../../core/auth/auth-error';
 import { Session } from '../../../core/auth/session';
@@ -17,6 +18,7 @@ export class LoginPage {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
+  protected readonly paths = PATHS;
 
   protected readonly form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],

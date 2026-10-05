@@ -114,6 +114,6 @@
 
   <p class="register__switch">
     {{ 'auth.register.haveAccount' }}
-    <a routerLink="/login">{{ 'auth.register.goToLogin' }}</a>
+    <a [routerLink]="['/', paths.login]">{{ 'auth.register.goToLogin' }}</a>
   </p>
 </section>

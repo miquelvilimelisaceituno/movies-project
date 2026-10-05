@@ -1,10 +1,12 @@
 import { Component, inject, signal, afterNextRender, ElementRef, Injector } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { PATHS } from '../../../core/config/paths';
 
 import { Session } from '../../../core/auth/session';
 import { passwordsMatch, PASSWORDS_MISMATCH } from '../passwords-match';
 import { AuthError } from '../../../core/auth/auth-error';
+
 
 /** Firebase rejects passwords shorter than 6 characters. */
 const MIN_PASSWORD_LENGTH = 6;
@@ -23,6 +25,7 @@ export class RegisterPage {
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
+  protected readonly paths = PATHS;
 
   protected readonly form = this.formBuilder.group(
     {
