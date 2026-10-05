@@ -116,6 +116,11 @@
       "network": "No hay conexión. Comprueba tu red e inténtalo de nuevo.",
       "popupBlocked": "El navegador ha bloqueado la ventana de Google. Permite las ventanas emergentes e inténtalo de nuevo.",
       "unknown": "Ha ocurrido un error inesperado. Inténtalo de nuevo."
+    },
+    "google": {
+      "separator": "o",
+      "submit": "Continuar con Google",
+      "submitting": "Abriendo Google…"
     }
   }
 }
