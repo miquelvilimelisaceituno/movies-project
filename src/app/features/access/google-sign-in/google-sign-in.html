@@ -1,0 +1,19 @@
+<div class="google-sign-in">
+  <p class="google-sign-in__separator" aria-hidden="true">{{ texts.google.separator }}</p>
+
+  <button
+    class="google-sign-in__button"
+    type="button"
+    (click)="signIn()"
+    [disabled]="submitting()"
+    [attr.aria-busy]="submitting()"
+  >
+    {{ submitting() ? texts.google.submitting : texts.google.submit }}
+  </button>
+
+  <p class="google-sign-in__alert" role="alert">
+    @if (errorKey(); as key) {
+      {{ texts.errors[key] }}
+    }
+  </p>
+</div>
