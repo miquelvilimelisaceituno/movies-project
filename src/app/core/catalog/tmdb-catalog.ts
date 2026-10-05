@@ -1,5 +1,5 @@
 import { httpResource } from '@angular/common/http';
-import { Service, signal } from '@angular/core';
+import { Service } from '@angular/core';
 import {
   DiscoverFilters,
   Genre,
@@ -16,61 +16,56 @@ import {
 export class TmdbCatalog {
   private readonly baseUrl = '/api/tmdb';
 
-  
-  readonly filters = signal<DiscoverFilters | undefined>(undefined);
-  readonly movieQuery = signal<SearchQuery>({ query: '' });
-  readonly personQuery = signal<SearchQuery>({ query: '' });
-  readonly keywordQuery = signal<SearchQuery>({ query: '' });
-  readonly trendingWindow = signal<'day' | 'week' | undefined>(undefined);
-  readonly selectedMovieId = signal<number | undefined>(undefined);
-  readonly selectedPersonId = signal<number | undefined>(undefined);
+  genres() {
+    return httpResource<{ genres: Genre[] }>(() => this.url('/genre/movie/list'));
+  }
 
-  readonly movies = httpResource<Page<MovieSummary>>(() => {
-    const filters = this.filters();
-    return filters === undefined ? undefined : this.url('/discover/movie', { ...filters });
-  });
+  discoverMovies(filters: () => DiscoverFilters | undefined) {
+    return httpResource<Page<MovieSummary>>(() => {
+      const value = filters();
+      return value === undefined ? undefined : this.url('/discover/movie', { ...value });
+    });
+  }
 
-  readonly movieSearch = httpResource<Page<MovieSummary>>(() => {
-    const search = this.movieQuery();
+  trendingMovies(window: () => 'day' | 'week' | undefined) {
+    return httpResource<Page<MovieSummary>>(() => {
+      const value = window();
+      return value === undefined ? undefined : this.url(`/trending/movie/${value}`);
+    });
+  }
+
+  searchMovies(search: () => SearchQuery) {
+    return httpResource<Page<MovieSummary>>(() => this.searchUrl('/search/movie', search()));
+  }
+
+  searchPeople(search: () => SearchQuery) {
+    return httpResource<Page<PersonSummary>>(() => this.searchUrl('/search/person', search()));
+  }
+
+  searchKeywords(search: () => SearchQuery) {
+    return httpResource<Page<Keyword>>(() => this.searchUrl('/search/keyword', search()));
+  }
+
+  movieDetails(id: () => number | undefined) {
+    return httpResource<MovieDetails>(() => this.detailUrl('/movie', id()));
+  }
+
+  personDetails(id: () => number | undefined) {
+    return httpResource<PersonDetails>(() => this.detailUrl('/person', id()));
+  }
+
+  private searchUrl(path: string, search: SearchQuery) {
     const query = search.query.trim();
-    return query ? this.url('/search/movie', { query, page: search.page ?? 1 }) : undefined;
-  });
+    return query ? this.url(path, { query, page: search.page ?? 1 }) : undefined;
+  }
 
-  readonly personSearch = httpResource<Page<PersonSummary>>(() => {
-    const search = this.personQuery();
-    const query = search.query.trim();
-    return query ? this.url('/search/person', { query, page: search.page ?? 1 }) : undefined;
-  });
-
-  readonly keywordSearch = httpResource<Page<Keyword>>(() => {
-    const search = this.keywordQuery();
-    const query = search.query.trim();
-    return query ? this.url('/search/keyword', { query, page: search.page ?? 1 }) : undefined;
-  });
-
-  
-  readonly genres = httpResource<{ genres: Genre[] }>(() => this.url('/genre/movie/list'));
-
-  readonly trending = httpResource<Page<MovieSummary>>(() => {
-    const window = this.trendingWindow();
-    return window === undefined ? undefined : this.url(`/trending/movie/${window}`);
-  });
-
-  readonly detail = httpResource<MovieDetails>(() => {
-    const id = this.selectedMovieId();
+  private detailUrl(path: string, id: number | undefined) {
     return id !== undefined && Number.isSafeInteger(id) && id > 0
-      ? this.url(`/movie/${id}`)
+      ? this.url(`${path}/${id}`)
       : undefined;
-  });
+  }
 
-  readonly personDetail = httpResource<PersonDetails>(() => {
-    const id = this.selectedPersonId();
-    return id !== undefined && Number.isSafeInteger(id) && id > 0
-      ? this.url(`/person/${id}`)
-      : undefined;
-  });
-
-  private url(path: string, params: Record<string, string | number | undefined> = {},) {
+  private url(path: string, params: Record<string, string | number | undefined> = {}) {
     const query = new URLSearchParams();
 
     for (const key of Object.keys(params)) {
@@ -90,5 +85,4 @@ export class TmdbCatalog {
 
     return `${fullPath}?${queryString}`;
   }
-  
 }

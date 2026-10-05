@@ -1,0 +1,38 @@
+fieldset {
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+}
+
+fieldset:disabled {
+  opacity: 0.6;
+}
+
+.fields {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 40rem) {
+  .fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+select,
+button {
+  padding: 0.5rem;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}

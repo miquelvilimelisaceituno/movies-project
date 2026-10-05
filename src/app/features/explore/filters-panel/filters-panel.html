@@ -1,0 +1,38 @@
+<form class="filters" [formGroup]="form">
+  <fieldset [disabled]="disabled()">
+    <legend>{{ texts.legend }}</legend>
+
+    <div class="fields">
+      <div class="field">
+        <label for="filter-genre">{{ texts.genre }}</label>
+        <select id="filter-genre" formControlName="genre">
+          <option [ngValue]="null">{{ texts.allGenres }}</option>
+          @for (genre of genres(); track genre.id) {
+            <option [ngValue]="genre.id">{{ genre.name }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="filter-rating">{{ texts.minRating }}</label>
+        <select id="filter-rating" formControlName="minRating">
+          <option [ngValue]="null">{{ texts.anyRating }}</option>
+          @for (rating of ratingOptions; track rating) {
+            <option [ngValue]="rating">{{ rating }} {{ texts.orMore }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="filter-sort">{{ texts.sort }}</label>
+        <select id="filter-sort" formControlName="sort">
+          @for (option of sortOptions; track option) {
+            <option [ngValue]="option">{{ texts.sortOptions[option] }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <button type="button" (click)="reset.emit()">{{ texts.reset }}</button>
+  </fieldset>
+</form>
