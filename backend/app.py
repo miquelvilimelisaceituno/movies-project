@@ -12,7 +12,7 @@ from werkzeug.exceptions import HTTPException
 TMDB_URL = "https://api.themoviedb.org/3"
 COMMON_PARAMS = {"language", "page"}
 DISCOVER_PARAMS = COMMON_PARAMS | {
-    "with_genres", "vote_average.gte", "primary_release_year", "sort_by",
+    "with_genres", "vote_average.gte", "vote_count.gte", "primary_release_year", "sort_by",
     "with_keywords", "with_cast",
 }
 
@@ -43,6 +43,9 @@ def create_app(test_config=None):
                 maximum = 500 if key == "page" else 9999
                 if not value.isascii() or not value.isdigit() or not 1 <= int(value) <= maximum:
                     raise ValueError(f"{key} debe estar entre 1 y {maximum}.")
+            if key == "vote_count.gte":
+                if not value.isascii() or not value.isdigit() or int(value) > 100000:
+                    raise ValueError("El número mínimo de votos debe estar entre 0 y 100000.")
             if key == "vote_average.gte":
                 if not re.fullmatch(r"\d+(\.\d+)?", value) or not 0 <= float(value) <= 10:
                     raise ValueError("La puntuación debe estar entre 0 y 10.")

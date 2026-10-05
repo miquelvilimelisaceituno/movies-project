@@ -87,6 +87,7 @@ export interface DiscoverFilters {
   page?: number;
   with_genres?: string;
   'vote_average.gte'?: number;
+  'vote_count.gte'?: number;
   primary_release_year?: number;
   with_keywords?: string;
   with_cast?: string;

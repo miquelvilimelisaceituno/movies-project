@@ -1,0 +1,55 @@
+<section class="explore" aria-labelledby="explore-title">
+  <h1 id="explore-title">{{ texts.title }}</h1>
+
+  <div class="controls">
+    <app-search-box [query]="query()" (queryChange)="search($event)" />
+
+    @if (isSearching()) {
+      <p class="hint">{{ texts.filtersDisabled }}</p>
+    }
+    <app-filters-panel
+      [genres]="genreList()"
+      [filters]="filters()"
+      [disabled]="isSearching()"
+      (filtersChange)="changeFilters($event)"
+      (reset)="resetFilters()"
+    />
+  </div>
+
+  <h2 #resultsTitle id="results-title" class="subtitle" tabindex="-1">
+    @if (isSearching()) {
+      {{ texts.resultsFor }} «{{ query() }}»
+    } @else {
+      {{ texts.discover }}
+    }
+  </h2>
+
+  @let movies = this.movies();
+
+  @if (movies.isLoading()) {
+    <p role="status">{{ texts.loading }}</p>
+  } @else if (movies.error()) {
+    <div class="feedback" role="alert">
+      <p>{{ texts.error }}</p>
+      <button type="button" (click)="movies.reload()">{{ texts.retry }}</button>
+    </div>
+  } @else if (movies.hasValue()) {
+    @let results = movies.value().results;
+
+    @if (results.length === 0) {
+      <p role="status">{{ isSearching() ? texts.noResults : texts.empty }}</p>
+    } @else {
+      <ul class="grid">
+        @for (movie of results; track movie.id) {
+          <li><app-movie-card [movie]="movie" /></li>
+        }
+      </ul>
+
+      <app-pagination
+        [page]="page()"
+        [totalPages]="totalPages()"
+        (pageChange)="changePage($event)"
+      />
+    }
+  }
+</section>
