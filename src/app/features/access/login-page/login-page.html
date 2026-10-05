@@ -1,10 +1,10 @@
 <section class="login" aria-labelledby="login-title">
-  <h1 id="login-title">{{ 'auth.login.title' }}</h1>
+  <h1 id="login-title">{{ texts.login.title }}</h1>
 
   <form class="login__form" [formGroup]="form" (ngSubmit)="submit()">
     <!-- Email -->
     <div class="login__field">
-      <label for="login-email">{{ 'auth.fields.email' }}</label>
+      <label for="login-email">{{ texts.fields.email }}</label>
       <input
         id="login-email"
         type="email"
@@ -16,9 +16,9 @@
       @if (showError(form.controls.email)) {
         <p id="login-email-error" class="login__error">
           @if (form.controls.email.hasError('required')) {
-            {{ 'auth.validation.required' }}
+            {{ texts.validation.required }}
           } @else {
-            {{ 'auth.validation.email' }}
+            {{ texts.validation.email }}
           }
         </p>
       }
@@ -26,7 +26,7 @@
 
     <!-- Password -->
     <div class="login__field">
-      <label for="login-password">{{ 'auth.fields.password' }}</label>
+      <label for="login-password">{{ texts.fields.password }}</label>
       <input
         id="login-password"
         type="password"
@@ -36,7 +36,7 @@
         [attr.aria-describedby]="showError(form.controls.password) ? 'login-password-error' : null"
       />
       @if (showError(form.controls.password)) {
-        <p id="login-password-error" class="login__error">{{ 'auth.validation.required' }}</p>
+        <p id="login-password-error" class="login__error">{{ texts.validation.required }}</p>
       }
     </div>
 
@@ -47,12 +47,12 @@
     </p>
 
     <button class="login__submit" type="submit" [disabled]="submitting()" [attr.aria-busy]="submitting()">
-      {{ submitting() ? 'auth.login.submitting' : 'auth.login.submit' }}
+      {{ submitting() ? texts.register.submitting : texts.register.submit }}
     </button>
   </form>
 
   <p class="login__switch">
-    {{ 'auth.login.noAccount' }}
-    <a [routerLink]="['/', paths.register]">{{ 'auth.login.goToRegister' }}</a>
+    {{ texts.login.noAccount }}
+    <a [routerLink]="['/', paths.register]">{{ texts.login.goToRegister }}</a>
   </p>
 </section>

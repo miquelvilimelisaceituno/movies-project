@@ -75,5 +75,49 @@
     "watch": "Ver el tráiler en YouTube",
     "newTab": "(se abre en una pestaña nueva)",
     "noTrailer": "Tráiler no disponible"
+  },
+  "auth": {
+    "login": {
+      "pageTitle": "Iniciar sesión · Movies",
+      "title": "Iniciar sesión",
+      "submit": "Entrar",
+      "submitting": "Entrando…",
+      "noAccount": "¿No tienes cuenta?",
+      "goToRegister": "Crear una cuenta"
+    },
+    "register": {
+      "pageTitle": "Crear cuenta · Movies",
+      "title": "Crear cuenta",
+      "passwordHint": "Mínimo 6 caracteres.", 
+      "submit": "Crear cuenta",
+      "submitting": "Creando cuenta…",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "goToLogin": "Iniciar sesión"
+    },
+    "fields": {
+      "displayName": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Repite la contraseña"
+    },
+    "validation": {
+      "required": "Este campo es obligatorio.",
+      "email": "Introduce un correo electrónico válido.",
+      "nameTooShort": "El nombre debe tener al menos 2 caracteres.",
+      "passwordTooShort": "La contraseña debe tener al menos 6 caracteres.",
+      "passwordsMismatch": "Las contraseñas no coinciden."
+    },
+    "errors": {
+      "emailInUse": "Ya existe una cuenta con este correo.",
+      "invalidEmail": "El correo electrónico no es válido.",
+      "weakPassword": "La contraseña es demasiado débil.",
+      "invalidCredentials": "Correo o contraseña incorrectos.",
+      "tooManyRequests": "Demasiados intentos. Espera unos minutos y vuelve a probarlo.",
+      "network": "No hay conexión. Comprueba tu red e inténtalo de nuevo.",
+      "popupBlocked": "El navegador ha bloqueado la ventana de Google. Permite las ventanas emergentes e inténtalo de nuevo.",
+      "unknown": "Ha ocurrido un error inesperado. Inténtalo de nuevo."
+    }
   }
 }
+
+

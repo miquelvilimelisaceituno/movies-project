@@ -2,6 +2,7 @@ import { afterNextRender, Component, ElementRef, inject, Injector, signal } from
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { PATHS } from '../../../core/config/paths';
+import { TEXTS } from '../../../core/config/texts';
 
 import { AuthError } from '../../../core/auth/auth-error';
 import { Session } from '../../../core/auth/session';
@@ -19,6 +20,7 @@ export class LoginPage {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
   protected readonly paths = PATHS;
+  protected readonly texts = TEXTS.auth;
 
   protected readonly form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
