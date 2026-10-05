@@ -77,12 +77,12 @@ describe('RegisterPage', () => {
   });
 
   it('shows the error key when registration fails', async () => {
-    register.mockRejectedValue(new AuthError('auth.errors.emailInUse'));
+    register.mockRejectedValue(new AuthError('emailInUse'));
     fillForm();
 
     await page['submit']();
 
-    expect(page['errorKey']()).toBe('auth.errors.emailInUse');
+    expect(page['errorKey']()).toBe('emailInUse');
     expect(navigateByUrl).not.toHaveBeenCalled();
     expect(page['submitting']()).toBe(false);
   });

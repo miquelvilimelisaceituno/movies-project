@@ -87,7 +87,7 @@ describe('Session', () => {
   it('throws an AuthError with the i18n key when login fails', async () => {
     vi.mocked(signInWithEmailAndPassword).mockRejectedValue({ code: 'auth/invalid-credential' });
     await expect(session.login('ana@movies.dev', 'bad')).rejects.toEqual(
-      new AuthError('auth.errors.invalidCredentials'),
+      new AuthError('invalidCredentials'),
     );
   });
 

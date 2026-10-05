@@ -3,6 +3,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
 import { Router, RouterLink } from '@angular/router';
 import { PATHS } from '../../../core/config/paths';
 import { TEXTS } from '../../../core/config/texts';
+import { AuthErrorKey } from '../../../core/auth/auth-error-key';
 
 import { AuthError } from '../../../core/auth/auth-error';
 import { Session } from '../../../core/auth/session';
@@ -32,7 +33,7 @@ export class LoginPage {
   protected readonly submitting = signal(false);
 
   /** i18n key of the error to show, or null when there is none. */
-  protected readonly errorKey = signal<string | null>(null);
+  protected readonly errorKey = signal<AuthErrorKey | null>(null);
 
   protected showError(control: AbstractControl): boolean {
     return control.invalid && control.touched;

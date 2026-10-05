@@ -98,7 +98,7 @@
     <!-- Firebase error: the container is always in the DOM so screen readers announce changes -->
     <p class="register__alert" role="alert">
       @if (errorKey(); as key) {
-        {{ key }}
+        {{ texts.errors[key] }}
       }
     </p>
 

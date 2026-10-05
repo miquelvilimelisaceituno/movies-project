@@ -58,12 +58,12 @@ describe('LoginPage', () => {
   });
 
   it('shows the error key when the credentials are wrong', async () => {
-    login.mockRejectedValue(new AuthError('auth.errors.invalidCredentials'));
+    login.mockRejectedValue(new AuthError('invalidCredentials'));
     fillForm();
 
     await page['submit']();
 
-    expect(page['errorKey']()).toBe('auth.errors.invalidCredentials');
+    expect(page['errorKey']()).toBe('invalidCredentials');
     expect(navigateByUrl).not.toHaveBeenCalled();
     expect(page['submitting']()).toBe(false);
   });

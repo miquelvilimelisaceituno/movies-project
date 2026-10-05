@@ -7,6 +7,7 @@ import { TEXTS } from '../../../core/config/texts';
 import { Session } from '../../../core/auth/session';
 import { passwordsMatch, PASSWORDS_MISMATCH } from '../passwords-match';
 import { AuthError } from '../../../core/auth/auth-error';
+import { AuthErrorKey } from '../../../core/auth/auth-error-key';
 
 
 
@@ -44,7 +45,7 @@ export class RegisterPage {
   protected readonly submitting = signal(false);
 
   /** i18n key of the error to show, or null when there is none. */
-  protected readonly errorKey = signal<string | null>(null);
+  protected readonly errorKey = signal<AuthErrorKey | null>(null);
 
   protected async submit(): Promise<void> {
     if (this.form.invalid) {
