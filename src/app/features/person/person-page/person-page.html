@@ -1,0 +1,77 @@
+<div class="person-page">
+  @if (personId() === undefined) {
+    <div class="feedback" role="alert">
+      <p>{{ texts.invalidId }}</p>
+      <a routerLink="/explorar">{{ texts.backToExplore }}</a>
+    </div>
+  } @else if (person.isLoading()) {
+    <p role="status">{{ texts.loading }}</p>
+  } @else if (person.error()) {
+    <div class="feedback" role="alert">
+      <p>{{ texts.error }}</p>
+      <button type="button" (click)="person.reload()">{{ texts.retry }}</button>
+      <a routerLink="/explorar">{{ texts.backToExplore }}</a>
+    </div>
+  } @else if (person.hasValue()) {
+    @let details = person.value();
+    @let photo = details.profile_path | tmdbImage: 'w342';
+
+    <article aria-labelledby="person-name">
+      <header class="hero">
+        @if (photo) {
+          <img class="photo" [src]="photo" alt="" width="342" height="513" />
+        } @else {
+          <div class="photo photo--missing">{{ texts.noPhoto }}</div>
+        }
+
+        <div>
+          <h1 id="person-name">{{ details.name }}</h1>
+
+          <dl class="facts">
+            <dt>{{ texts.birthday }}</dt>
+            <dd>{{ (details.birthday | date: 'dd/MM/yyyy') ?? texts.notAvailable }}</dd>
+
+            @if (details.deathday) {
+              <dt>{{ texts.deathday }}</dt>
+              <dd>{{ details.deathday | date: 'dd/MM/yyyy' }}</dd>
+            }
+
+            <dt>{{ texts.placeOfBirth }}</dt>
+            <dd>{{ details.place_of_birth || texts.notAvailable }}</dd>
+          </dl>
+        </div>
+      </header>
+
+      <section aria-labelledby="biography-title">
+        <h2 id="biography-title">{{ texts.biography }}</h2>
+        <p class="biography">{{ details.biography || texts.notAvailable }}</p>
+      </section>
+
+      @if (actingMovies().length > 0) {
+        <section aria-labelledby="acting-title">
+          <h2 id="acting-title">{{ texts.acting }}</h2>
+          <ul class="grid">
+            @for (movie of actingMovies(); track movie.credit_id) {
+              <li><app-movie-card [movie]="movie" /></li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (directedMovies().length > 0) {
+        <section aria-labelledby="directing-title">
+          <h2 id="directing-title">{{ texts.directing }}</h2>
+          <ul class="grid">
+            @for (movie of directedMovies(); track movie.credit_id) {
+              <li><app-movie-card [movie]="movie" /></li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (actingMovies().length === 0 && directedMovies().length === 0) {
+        <p>{{ texts.noMovies }}</p>
+      }
+    </article>
+  }
+</div>

@@ -75,5 +75,22 @@
     "watch": "Ver el tráiler en YouTube",
     "newTab": "(se abre en una pestaña nueva)",
     "noTrailer": "Tráiler no disponible"
+  },
+  "person": {
+    "pageTitle": "Ficha de persona · Movies",
+    "loading": "Cargando persona…",
+    "error": "No se ha podido cargar la persona.",
+    "retry": "Reintentar",
+    "invalidId": "La dirección no corresponde a ninguna persona.",
+    "backToExplore": "Volver a explorar",
+    "notAvailable": "No disponible",
+    "noPhoto": "Foto no disponible",
+    "birthday": "Fecha de nacimiento",
+    "deathday": "Fecha de fallecimiento",
+    "placeOfBirth": "Lugar de nacimiento",
+    "biography": "Biografía",
+    "acting": "Como intérprete",
+    "directing": "Como director",
+    "noMovies": "Filmografía no disponible"
   }
 }
