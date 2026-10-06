@@ -5,12 +5,14 @@ import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { App } from './app';
 import { routes } from './app.routes';
+import { signal } from '@angular/core';
+import { Session } from './core/auth/session';
 
 describe('App', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter(routes), provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideRouter(routes), provideHttpClient(), provideHttpClientTesting(), { provide: Session, useValue: { user: signal(null) } },],
     });
   });
 
