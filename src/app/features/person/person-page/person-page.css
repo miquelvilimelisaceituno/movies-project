@@ -1,0 +1,67 @@
+.person-page {
+  padding: 1rem;
+}
+
+.hero {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .hero {
+    grid-template-columns: 15rem 1fr;
+    align-items: start;
+  }
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  max-width: 20rem;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.photo--missing {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: #374151;
+  color: #d1d5db;
+  text-align: center;
+}
+
+.facts dt {
+  font-weight: bold;
+}
+
+.facts dd {
+  margin: 0 0 0.75rem;
+}
+
+.biography {
+  white-space: pre-line;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+}
+
+.feedback button {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
