@@ -1,0 +1,23 @@
+<div class="user-menu" role="group" [attr.aria-label]="texts.userMenu.ariaLabel">
+  @if (user(); as currentUser) {
+    <span class="user-menu__name">{{ currentUser.displayName ?? currentUser.email }}</span>
+    <button
+      class="user-menu__button"
+      type="button"
+      (click)="logout()"
+      [disabled]="submitting()"
+      [attr.aria-busy]="submitting()"
+    >
+      {{ submitting() ? texts.userMenu.loggingOut : texts.userMenu.logout }}
+    </button>
+  } @else if (user() === null) {
+    <a class="user-menu__link" [routerLink]="['/', paths.login]">{{ texts.userMenu.login }}</a>
+    <a class="user-menu__link" [routerLink]="['/', paths.register]">{{ texts.userMenu.register }}</a>
+  }
+
+  <p class="user-menu__alert" role="alert">
+    @if (errorKey(); as key) {
+      {{ texts.errors[key] }}
+    }
+  </p>
+</div>
