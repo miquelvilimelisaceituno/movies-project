@@ -1,0 +1,60 @@
+<section class="login" aria-labelledby="login-title">
+  <h1 id="login-title">{{ texts.login.title }}</h1>
+
+  <form class="login__form" [formGroup]="form" (ngSubmit)="submit()">
+    <!-- Email -->
+    <div class="login__field">
+      <label for="login-email">{{ texts.fields.email }}</label>
+      <input
+        id="login-email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        [attr.aria-invalid]="showError(form.controls.email)"
+        [attr.aria-describedby]="showError(form.controls.email) ? 'login-email-error' : null"
+      />
+      @if (showError(form.controls.email)) {
+        <p id="login-email-error" class="login__error">
+          @if (form.controls.email.hasError('required')) {
+            {{ texts.validation.required }}
+          } @else {
+            {{ texts.validation.email }}
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Password -->
+    <div class="login__field">
+      <label for="login-password">{{ texts.fields.password }}</label>
+      <input
+        id="login-password"
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+        [attr.aria-invalid]="showError(form.controls.password)"
+        [attr.aria-describedby]="showError(form.controls.password) ? 'login-password-error' : null"
+      />
+      @if (showError(form.controls.password)) {
+        <p id="login-password-error" class="login__error">{{ texts.validation.required }}</p>
+      }
+    </div>
+
+    <p class="login__alert" role="alert">
+      @if (errorKey(); as key) {
+        {{ texts.errors[key] }}
+      }
+    </p>
+
+    <button class="login__submit" type="submit" [disabled]="submitting()" [attr.aria-busy]="submitting()">
+      {{ submitting() ? texts.register.submitting : texts.register.submit }}
+    </button>
+  </form>
+
+  <app-google-sign-in />
+
+  <p class="login__switch">
+    {{ texts.login.noAccount }}
+    <a [routerLink]="['/', paths.register]">{{ texts.login.goToRegister }}</a>
+  </p>
+</section>
