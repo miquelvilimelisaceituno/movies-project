@@ -29,4 +29,24 @@ describe('App', () => {
       'Abre los ojos...',
     );
   });
+
+  it('shows the navigation and the page content inside main', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const element: HTMLElement = fixture.nativeElement;
+
+    expect(element.querySelector('app-navigation')).not.toBeNull();
+    expect(element.querySelector('main router-outlet')).not.toBeNull();
+  });
+
+  it('moves the focus to the main content with the skip link', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const element: HTMLElement = fixture.nativeElement;
+    const skipLink = element.querySelector<HTMLAnchorElement>('a.skip-link');
+
+    expect(skipLink?.textContent).toContain('Saltar al contenido');
+    skipLink?.click();
+    expect(document.activeElement).toBe(element.querySelector('main'));
+  });
 });
