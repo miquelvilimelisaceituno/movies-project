@@ -1,0 +1,35 @@
+<div class="home">
+  <section class="welcome" aria-labelledby="home-title">
+    <div class="hero-title">
+      <h1 id="home-title">{{ texts.title }}</h1>
+    </div>
+    
+    <p>{{ texts.intro }}</p>
+    <a class="explore-link" routerLink="/explorar">{{ texts.explore }}</a>
+  </section>
+
+  <section aria-labelledby="trending-title">
+    <h2 id="trending-title">{{ texts.trending }}</h2>
+
+    @if (trending.isLoading()) {
+      <p role="status">{{ texts.loading }}</p>
+    } @else if (trending.error()) {
+      <div class="feedback" role="alert">
+        <p>{{ texts.error }}</p>
+        <button type="button" (click)="trending.reload()">{{ texts.retry }}</button>
+      </div>
+    } @else if (trending.hasValue()) {
+      @let movies = trending.value().results;
+
+      @if (movies.length === 0) {
+        <p role="status">{{ texts.empty }}</p>
+      } @else {
+        <ul class="grid">
+          @for (movie of movies; track movie.id) {
+            <li><app-movie-card [movie]="movie" /></li>
+          }
+        </ul>
+      }
+    }
+  </section>
+</div>

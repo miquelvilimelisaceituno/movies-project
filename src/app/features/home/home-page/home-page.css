@@ -1,0 +1,48 @@
+.home {
+  padding: 1rem;
+}
+
+.welcome {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+.explore-link {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  background: #1f2937;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.explore-link:hover,
+.explore-link:focus-visible {
+  opacity: 0.9;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+}
+
+.feedback button {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
