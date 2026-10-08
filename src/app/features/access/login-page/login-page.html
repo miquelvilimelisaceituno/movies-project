@@ -55,6 +55,6 @@
 
   <p class="login__switch">
     {{ texts.login.noAccount }}
-    <a [routerLink]="['/', paths.register]">{{ texts.login.goToRegister }}</a>
+    <a [routerLink]="['/', paths.register]" queryParamsHandling="preserve">{{ texts.login.goToRegister }}</a>
   </p>
 </section>
