@@ -1,2 +1,7 @@
-<app-user-menu /><!-- Temporary: moves into the header when it exists. -->
-<router-outlet />
+<a class="skip-link" href="#main" (click)="$event.preventDefault(); main.focus()">
+  {{ texts.skipToContent }}
+</a>
+<app-navigation />
+<main #main id="main" tabindex="-1">
+  <router-outlet />
+</main>

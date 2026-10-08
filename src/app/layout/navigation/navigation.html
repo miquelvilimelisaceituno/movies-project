@@ -1,0 +1,29 @@
+<header class="header">
+  <nav [attr.aria-label]="texts.label">
+    <ul class="links">
+      <li>
+        <a
+          class="link"
+          routerLink="/"
+          routerLinkActive="link--active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          ariaCurrentWhenActive="page"
+        >
+          {{ texts.home }}
+        </a>
+      </li>
+      <li>
+        <a
+          class="link"
+          routerLink="/explorar"
+          routerLinkActive="link--active"
+          ariaCurrentWhenActive="page"
+        >
+          {{ texts.explore }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <app-user-menu />
+</header>
