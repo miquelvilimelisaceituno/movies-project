@@ -2,4 +2,5 @@
 export const PATHS = {
   login: 'iniciar-sesion',
   register: 'registro',
+  profile: 'perfil',
 } as const;

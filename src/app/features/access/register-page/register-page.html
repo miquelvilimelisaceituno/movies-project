@@ -112,10 +112,10 @@
     </button>
   </form>
 
-   <app-google-sign-in />
+   <app-google-sign-in (signedIn)="goToReturnUrl()" />
 
   <p class="register__switch">
     {{ texts.register.haveAccount }}
-    <a [routerLink]="['/', paths.login]">{{ texts.register.goToLogin }}</a>
+    <a [routerLink]="['/', paths.login]" queryParamsHandling="preserve">{{ texts.register.goToLogin }}</a>
   </p>
 </section>

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+import type { Mock } from 'vitest';
 
 import { AuthError } from '../../../core/auth/auth-error';
 import { Session } from '../../../core/auth/session';
@@ -9,6 +9,7 @@ import { LoginPage } from './login-page';
 const VALID_DATA = { email: 'ana@movies.dev', password: 'secret123' };
 
 describe('LoginPage', () => {
+  let fixture: ComponentFixture<LoginPage>;
   let page: LoginPage;
   let login: Mock;
   let navigateByUrl: Mock;
@@ -24,7 +25,8 @@ describe('LoginPage', () => {
     navigateByUrl = vi.fn().mockResolvedValue(true);
     TestBed.inject(Router).navigateByUrl = navigateByUrl;
 
-    page = TestBed.createComponent(LoginPage).componentInstance;
+    fixture = TestBed.createComponent(LoginPage);
+    page = fixture.componentInstance;
   });
 
   function fillForm(data = VALID_DATA): void {
@@ -73,5 +75,23 @@ describe('LoginPage', () => {
     fillForm();
 
     await expect(page['submit']()).rejects.toThrow('boom');
+  });
+
+  it('returns to the page the guard sent the user from', async () => {
+    fixture.componentRef.setInput('returnUrl', '/perfil');
+    fillForm();
+
+    await page['submit']();
+
+    expect(navigateByUrl).toHaveBeenCalledWith('/perfil');
+  });
+
+  it('ignores unsafe return URLs', async () => {
+    fixture.componentRef.setInput('returnUrl', 'https://evil.com');
+    fillForm();
+
+    await page['submit']();
+
+    expect(navigateByUrl).toHaveBeenCalledWith('/');
   });
 });

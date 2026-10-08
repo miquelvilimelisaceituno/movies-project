@@ -1,4 +1,4 @@
-import { Component, inject, signal, afterNextRender, ElementRef, Injector } from '@angular/core';
+import { Component, inject, signal, afterNextRender, ElementRef, Injector, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { PATHS } from '../../../core/config/paths';
@@ -8,6 +8,7 @@ import { Session } from '../../../core/auth/session';
 import { passwordsMatch, PASSWORDS_MISMATCH } from '../passwords-match';
 import { AuthError } from '../../../core/auth/auth-error';
 import { AuthErrorKey } from '../../../core/auth/auth-error-key';
+import { safeReturnUrl } from '../../../core/auth/safe-return-url';
 
 
 
@@ -30,6 +31,8 @@ export class RegisterPage {
   private readonly injector = inject(Injector);
   protected readonly paths = PATHS;
   protected readonly texts = TEXTS.auth;
+  /** Filled from ?returnUrl= by the router (withComponentInputBinding). */
+  readonly returnUrl = input<string>();
 
   protected readonly form = this.formBuilder.group(
     {
@@ -60,7 +63,7 @@ export class RegisterPage {
 
     try {
       await this.session.register(email, password, displayName.trim());
-      await this.router.navigateByUrl('/');
+      await this.goToReturnUrl();
     } catch (error) {
       if (!(error instanceof AuthError)) {
         throw error;
@@ -69,7 +72,11 @@ export class RegisterPage {
     } finally {
       this.submitting.set(false);
     }
-  };
+  }
+
+  protected goToReturnUrl(): Promise<boolean> {
+    return this.router.navigateByUrl(safeReturnUrl(this.returnUrl()));
+  }
 
   /** A field shows its error only after the user has left it (or tried to submit). */
   protected showError(control: AbstractControl): boolean {

@@ -1,0 +1,24 @@
+<section class="profile-page">
+  <h1>{{ texts.title }}</h1>
+
+  @if (user(); as currentUser) {
+    @if (currentUser.photoUrl) {
+      <img
+        class="profile-page__photo"
+        [src]="currentUser.photoUrl"
+        alt=""
+        width="96"
+        height="96"
+        referrerpolicy="no-referrer"
+      />
+    }
+
+    <dl class="profile-page__data">
+      <dt>{{ texts.name }}</dt>
+      <dd>{{ currentUser.displayName ?? texts.noName }}</dd>
+
+      <dt>{{ texts.email }}</dt>
+      <dd>{{ currentUser.email }}</dd>
+    </dl>
+  }
+</section>

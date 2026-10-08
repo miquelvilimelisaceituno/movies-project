@@ -110,6 +110,13 @@
     "directing": "Como director",
     "noMovies": "Filmografía no disponible"
   },
+  "profile": {
+    "pageTitle": "Mi perfil · Movies",
+    "title": "Mi perfil",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "noName": "Sin nombre"
+  },
   "auth": {
     "login": {
       "pageTitle": "Iniciar sesión · Movies",
@@ -155,6 +162,7 @@
       "ariaLabel": "Cuenta de usuario",
       "login": "Iniciar sesión",
       "register": "Crear cuenta",
+      "profile": "Mi perfil",
       "logout": "Cerrar sesión",
       "loggingOut": "Cerrando sesión…"
     },

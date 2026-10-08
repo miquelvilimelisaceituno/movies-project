@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 
@@ -14,6 +14,7 @@ const VALID_DATA = {
 };
 
 describe('RegisterPage', () => {
+  let fixture: ComponentFixture<RegisterPage>;
   let page: RegisterPage;
   let register: Mock;
   let navigateByUrl: Mock;
@@ -29,7 +30,8 @@ describe('RegisterPage', () => {
     navigateByUrl = vi.fn().mockResolvedValue(true);
     TestBed.inject(Router).navigateByUrl = navigateByUrl;
 
-    page = TestBed.createComponent(RegisterPage).componentInstance;
+    fixture = TestBed.createComponent(RegisterPage);
+    page = fixture.componentInstance;
   });
 
   function fillForm(data = VALID_DATA): void {
@@ -61,6 +63,15 @@ describe('RegisterPage', () => {
     await page['submit']();
 
     expect(navigateByUrl).toHaveBeenCalledWith('/');
+  });
+
+  it('returns to the page the guard sent the user from', async () => {
+    fixture.componentRef.setInput('returnUrl', '/perfil');
+    fillForm();
+
+    await page['submit']();
+
+    expect(navigateByUrl).toHaveBeenCalledWith('/perfil');
   });
 
   it('is submitting only while waiting for Firebase', async () => {

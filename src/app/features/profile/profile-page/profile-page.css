@@ -1,0 +1,17 @@
+.profile-page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.profile-page__photo {
+  border-radius: 50%;
+}
+
+.profile-page__data dt {
+  font-weight: bold;
+}
+
+.profile-page__data dd {
+  margin: 0 0 1rem;
+}
