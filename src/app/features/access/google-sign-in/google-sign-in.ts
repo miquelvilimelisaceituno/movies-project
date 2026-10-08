@@ -1,5 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, signal, output } from '@angular/core';
 
 import { AuthError } from '../../../core/auth/auth-error';
 import type { AuthErrorKey } from '../../../core/auth/auth-error-key';
@@ -14,9 +13,11 @@ import { TEXTS } from '../../../core/config/texts';
 })
 export class GoogleSignIn {
   private readonly session = inject(Session);
-  private readonly router = inject(Router);
 
   protected readonly texts = TEXTS.auth;
+
+  /** Emits once the user has signed in, so the page decides where to go. */
+  readonly signedIn = output<void>();
 
   /** True while the Google popup is open. */
   protected readonly submitting = signal(false);
@@ -30,7 +31,7 @@ export class GoogleSignIn {
 
     try {
       await this.session.loginWithGoogle();
-      await this.router.navigateByUrl('/');
+      this.signedIn.emit();
     } catch (error) {
       if (!(error instanceof AuthError)) {
         throw error;

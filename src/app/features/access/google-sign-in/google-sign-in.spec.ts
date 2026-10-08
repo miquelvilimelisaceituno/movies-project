@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter, Router } from '@angular/router';
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+import type { Mock } from 'vitest';
 
 import { AuthError } from '../../../core/auth/auth-error';
 import { Session } from '../../../core/auth/session';
@@ -9,20 +8,20 @@ import { GoogleSignIn } from './google-sign-in';
 describe('GoogleSignIn', () => {
   let button: GoogleSignIn;
   let loginWithGoogle: Mock;
-  let navigateByUrl: Mock;
+  let signedIn: Mock;
 
   beforeEach(() => {
     loginWithGoogle = vi.fn().mockResolvedValue(undefined);
 
     TestBed.configureTestingModule({
       imports: [GoogleSignIn],
-      providers: [provideRouter([]), { provide: Session, useValue: { loginWithGoogle } }],
+      providers: [{ provide: Session, useValue: { loginWithGoogle } }],
     });
 
-    navigateByUrl = vi.fn().mockResolvedValue(true);
-    TestBed.inject(Router).navigateByUrl = navigateByUrl;
-
     button = TestBed.createComponent(GoogleSignIn).componentInstance;
+
+    signedIn = vi.fn();
+    button.signedIn.subscribe(signedIn);
   });
 
   it('should create', () => {
@@ -33,7 +32,7 @@ describe('GoogleSignIn', () => {
     await button['signIn']();
 
     expect(loginWithGoogle).toHaveBeenCalled();
-    expect(navigateByUrl).toHaveBeenCalledWith('/');
+    expect(signedIn).toHaveBeenCalled();
   });
 
   it('shows nothing when the user closes the popup', async () => {
@@ -42,7 +41,7 @@ describe('GoogleSignIn', () => {
     await button['signIn']();
 
     expect(button['errorKey']()).toBeNull();
-    expect(navigateByUrl).not.toHaveBeenCalled();
+    expect(signedIn).not.toHaveBeenCalled();
     expect(button['submitting']()).toBe(false);
   });
 

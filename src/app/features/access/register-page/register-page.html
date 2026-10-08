@@ -112,7 +112,7 @@
     </button>
   </form>
 
-   <app-google-sign-in />
+   <app-google-sign-in (signedIn)="goToReturnUrl()" />
 
   <p class="register__switch">
     {{ texts.register.haveAccount }}
