@@ -1,4 +1,15 @@
 {
+  "home": {
+    "pageTitle": "Inicio · Movies",
+    "title": "Abre los ojos...",
+    "intro": "Descubre películas, consulta sus fichas y encuentra qué ver hoy.",
+    "explore": "Explorar películas",
+    "trending": "Tendencias de la semana",
+    "loading": "Cargando tendencias…",
+    "error": "No se han podido cargar las tendencias.",
+    "retry": "Reintentar",
+    "empty": "No hay tendencias que mostrar."
+  },
   "explore": {
     "pageTitle": "Explorar películas · Movies",
     "title": "Explorar películas",

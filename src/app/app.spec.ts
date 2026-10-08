@@ -21,12 +21,12 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('redirects the root URL to the explore page', async () => {
+  it('shows the home page at the root URL', async () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/');
-    expect(TestBed.inject(Router).url).toBe('/explorar');
+    expect(TestBed.inject(Router).url).toBe('/');
     expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain(
-      'Explorar películas',
+      'Abre los ojos...',
     );
   });
 });

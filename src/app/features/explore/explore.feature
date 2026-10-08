@@ -4,10 +4,6 @@ Característica: Explorar películas
   Quiero ver un listado de películas
   Para descubrir qué ver y abrir su ficha
 
-  Escenario: Abrir la aplicación
-    Cuando entro en la raíz de la aplicación
-    Entonces se abre la página de exploración en /explorar
-
   Escenario: Ver las películas más populares
     Dado que estoy en la página de exploración
     Cuando TMDB devuelve las películas más populares
