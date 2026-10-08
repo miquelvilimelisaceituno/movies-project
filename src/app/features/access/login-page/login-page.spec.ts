@@ -79,6 +79,7 @@ describe('LoginPage', () => {
 
   it('returns to the page the guard sent the user from', async () => {
     fixture.componentRef.setInput('returnUrl', '/perfil');
+    fillForm();
 
     await page['submit']();
 
@@ -87,6 +88,7 @@ describe('LoginPage', () => {
 
   it('ignores unsafe return URLs', async () => {
     fixture.componentRef.setInput('returnUrl', 'https://evil.com');
+    fillForm();
 
     await page['submit']();
 
