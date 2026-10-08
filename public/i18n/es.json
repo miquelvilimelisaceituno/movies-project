@@ -1,4 +1,10 @@
 {
+  "navigation": {
+    "label": "Principal",
+    "home": "Inicio",
+    "explore": "Explorar",
+    "skipToContent": "Saltar al contenido"
+  },
   "home": {
     "pageTitle": "Inicio · Movies",
     "title": "Abre los ojos...",
