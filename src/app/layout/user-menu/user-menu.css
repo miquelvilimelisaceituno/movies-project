@@ -10,3 +10,8 @@
 .user-menu__alert:empty {
   display: none;
 }
+
+.user-menu__link--active {
+  font-weight: bold;
+  border-bottom: 3px solid currentColor;
+}

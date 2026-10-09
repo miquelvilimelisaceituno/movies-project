@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import {Router, RouterLink } from '@angular/router';
+import {Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AuthError } from '../../core/auth/auth-error';
 import type { AuthErrorKey } from '../../core/auth/auth-error-key';
@@ -10,7 +10,7 @@ import { TEXTS } from '../../core/config/texts';
 
 /** Login/register links or the current user with a logout button. */
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   selector: 'app-user-menu',
   styleUrl: './user-menu.css',
   templateUrl: './user-menu.html',

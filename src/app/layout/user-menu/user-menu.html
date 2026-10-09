@@ -1,6 +1,14 @@
 <div class="user-menu" role="group" [attr.aria-label]="texts.userMenu.ariaLabel">
   @if (user(); as currentUser) {
     <span class="user-menu__name">{{ currentUser.displayName ?? currentUser.email }}</span>
+    <a
+      class="user-menu__link"
+      [routerLink]="['/', paths.profile]"
+      routerLinkActive="user-menu__link--active"
+      ariaCurrentWhenActive="page"
+    >
+      {{ texts.userMenu.profile }}
+    </a>
     <button
       class="user-menu__button"
       type="button"
