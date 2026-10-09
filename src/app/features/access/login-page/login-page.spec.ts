@@ -94,4 +94,19 @@ describe('LoginPage', () => {
 
     expect(navigateByUrl).toHaveBeenCalledWith('/');
   });
+
+  it('shows the login text on the submit button', () => {
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+    expect(button.textContent).toContain('Entrar');
+  });
+
+  it('shows the loading text on the submit button while submitting', () => {
+    page['submitting'].set(true);
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+    expect(button.textContent).toContain('Entrando…');
+  });
 });

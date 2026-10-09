@@ -49,6 +49,7 @@ describe('UserMenu', () => {
 
     expect(element.querySelector('a[href="/iniciar-sesion"]')).not.toBeNull();
     expect(element.querySelector('a[href="/registro"]')).not.toBeNull();
+    expect(element.querySelector('a[href="/perfil"]')).toBeNull();
   });
 
   it('shows the user name and a logout button with a session', () => {
@@ -57,6 +58,12 @@ describe('UserMenu', () => {
 
     expect(element.textContent).toContain('Tonyina');
     expect(element.querySelector('button')).not.toBeNull();
+  });
+
+  it('shows a profile link with a session', () => {
+    user.set(TONYINA);
+
+    expect(render().querySelector('a[href="/perfil"]')).not.toBeNull();
   });
 
   it('falls back to the email when there is no display name', () => {
