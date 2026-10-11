@@ -1,0 +1,58 @@
+.favorites-page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.alert {
+  margin: 0;
+  color: #b91c1c;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.poster {
+  flex-shrink: 0;
+  width: 92px;
+  height: 138px;
+  border-radius: 0.25rem;
+  object-fit: cover;
+}
+
+.poster--missing {
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  background: #374151;
+  color: #d1d5db;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 0.25rem;
+  font-size: 1.125rem;
+}
+
+.year {
+  margin: 0 0 0.75rem;
+}
+
+.body button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+

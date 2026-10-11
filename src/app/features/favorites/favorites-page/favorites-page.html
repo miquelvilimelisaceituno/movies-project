@@ -1,0 +1,45 @@
+<section class="favorites-page">
+  <h1>{{ texts.title }}</h1>
+
+  <p class="alert" role="alert">
+    @if (removeError()) {
+      {{ texts.removeError }}
+    }
+  </p>
+
+  @if (status() === 'loading') {
+    <p role="status">{{ texts.loading }}</p>
+  } @else if (status() === 'error') {
+    <p>{{ texts.error }}</p>
+  } @else if (favorites().length === 0) {
+    <p>{{ texts.empty }}</p>
+    <a routerLink="/explorar">{{ texts.explore }}</a>
+  } @else {
+    <ul class="list">
+      @for (movie of favorites(); track movie.tmdbId) {
+        @let poster = movie.posterPath | tmdbImage: 'w185';
+        <li class="item">
+          @if (poster) {
+            <img class="poster" [src]="poster" alt="" width="92" height="138" loading="lazy" />
+          } @else {
+            <div class="poster poster--missing">{{ texts.noPoster }}</div>
+          }
+
+          <div class="body">
+            <h2 class="title">
+              <a [routerLink]="['/peliculas', movie.tmdbId]">{{ movie.title }}</a>
+            </h2>
+            <p class="year">{{ (movie.releaseDate | year) ?? texts.noDate }}</p>
+            <button
+              type="button"
+              [attr.aria-label]="texts.remove + ': ' + movie.title"
+              (click)="remove(movie)"
+            >
+              {{ texts.remove }}
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</section>
