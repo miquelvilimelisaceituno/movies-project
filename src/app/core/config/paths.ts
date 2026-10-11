@@ -3,4 +3,5 @@ export const PATHS = {
   login: 'iniciar-sesion',
   register: 'registro',
   profile: 'perfil',
+  favorites: 'favoritos',
 } as const;

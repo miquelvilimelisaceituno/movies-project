@@ -34,6 +34,29 @@
             <p class="tagline">{{ details.tagline }}</p>
           }
 
+          @if (user()) {
+            <div class="favorite">
+              <app-favorite-button
+                [active]="isFavorite()"
+                [disabled]="favoritesStatus() !== 'ready'"
+                (toggled)="toggleFavorite(details)"
+              />
+              <p class="favorite__alert" role="alert">
+                @if (favoritesStatus() === 'error') {
+                  {{ texts.favoritesLoadError }}
+                } @else if (saveError()) {
+                  {{ texts.favoriteSaveError }}
+                }
+              </p>
+            </div>
+          } @else if (user() === null) {
+            <p class="favorite">
+              <a [routerLink]="['/', paths.login]" [queryParams]="{ returnUrl: router.url }">
+                {{ texts.loginToFavorite }}
+              </a>
+            </p>
+          }
+
           <dl class="facts">
             <dt>{{ texts.releaseDate }}</dt>
             <dd>{{ (details.release_date | date: 'dd/MM/yyyy') ?? texts.notAvailable }}</dd>

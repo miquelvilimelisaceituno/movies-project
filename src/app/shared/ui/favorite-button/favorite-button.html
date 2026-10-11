@@ -1,0 +1,10 @@
+<button
+  class="favorite-button"
+  type="button"
+  [attr.aria-pressed]="active()"
+  [disabled]="disabled()"
+  (click)="toggled.emit()"
+>
+  <span class="icon" aria-hidden="true">{{ active() ? '★' : '☆' }}</span>
+  {{ texts.label }}
+</button>

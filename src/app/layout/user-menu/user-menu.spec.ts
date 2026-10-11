@@ -66,6 +66,14 @@ describe('UserMenu', () => {
     expect(render().querySelector('a[href="/perfil"]')).not.toBeNull();
   });
 
+  it('shows a favorites link only with a session', () => {
+    user.set(null);
+    expect(render().querySelector('a[href="/favoritos"]')).toBeNull();
+
+    user.set(TONYINA);
+    expect(render().querySelector('a[href="/favoritos"]')).not.toBeNull();
+  });
+
   it('falls back to the email when there is no display name', () => {
     user.set({ ...TONYINA, displayName: null });
 

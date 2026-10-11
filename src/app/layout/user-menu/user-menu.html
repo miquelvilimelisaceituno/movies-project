@@ -9,6 +9,14 @@
     >
       {{ texts.userMenu.profile }}
     </a>
+    <a
+      class="user-menu__link"
+      [routerLink]="['/', paths.favorites]"
+      routerLinkActive="user-menu__link--active"
+      ariaCurrentWhenActive="page"
+    >
+      {{ texts.userMenu.favorites }}
+    </a>
     <button
       class="user-menu__button"
       type="button"

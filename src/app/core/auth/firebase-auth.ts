@@ -1,8 +1,7 @@
-import { InjectionToken } from '@angular/core';
-import { initializeApp } from 'firebase/app';
+import { inject, InjectionToken } from '@angular/core';
 import { getAuth, type Auth, createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 
-import { firebaseConfig } from '../config/firebase';
+import { FIREBASE_APP } from '../firebase/firebase-app';
 
 /**
  * Firebase Auth instance shared by the whole app.
@@ -12,7 +11,7 @@ import { firebaseConfig } from '../config/firebase';
  */
 export const FIREBASE_AUTH = new InjectionToken<Auth>('FIREBASE_AUTH', {
   providedIn: 'root',
-  factory: () => getAuth(initializeApp(firebaseConfig)),
+  factory: () => getAuth(inject(FIREBASE_APP)),
 });
 
 /** The Firebase Auth functions Session uses, grouped so tests can replace them. */

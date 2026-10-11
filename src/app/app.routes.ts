@@ -13,6 +13,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/profile/profile.routes'),
   },
   {
+    path: PATHS.favorites,
+    canActivate: [authGuard],
+    loadChildren: () => import('./features/favorites/favorites.routes'),
+  },
+  {
     path: '',
     loadChildren: () => import('./features/access/access.routes').then((m) => m.ACCESS_ROUTES),
   },

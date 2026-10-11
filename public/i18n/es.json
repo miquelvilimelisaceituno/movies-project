@@ -78,7 +78,25 @@
     "rating": "Puntuación TMDB",
     "votes": "votos",
     "noVotes": "Sin votos",
-    "overview": "Sinopsis"
+    "overview": "Sinopsis",
+    "loginToFavorite": "Inicia sesión para guardarla en favoritas",
+    "favoritesLoadError": "No se han podido cargar tus favoritas.",
+    "favoriteSaveError": "No se ha podido guardar el cambio. Inténtalo de nuevo."
+  },
+  "favoriteButton": {
+    "label": "Favorita"
+  },
+  "favorites": {
+    "pageTitle": "Mis favoritas · Movies",
+    "title": "Mis favoritas",
+    "loading": "Cargando tus favoritas…",
+    "error": "No se han podido cargar tus favoritas.",
+    "empty": "Todavía no tienes películas favoritas.",
+    "explore": "Explorar películas",
+    "noPoster": "Póster no disponible",
+    "noDate": "Fecha desconocida",
+    "remove": "Quitar",
+    "removeError": "No se ha podido quitar la película. Inténtalo de nuevo."
   },
   "credits": {
     "cast": "Reparto",
@@ -163,6 +181,7 @@
       "login": "Iniciar sesión",
       "register": "Crear cuenta",
       "profile": "Mi perfil",
+      "favorites": "Mis favoritas",
       "logout": "Cerrar sesión",
       "loggingOut": "Cerrando sesión…"
     },
