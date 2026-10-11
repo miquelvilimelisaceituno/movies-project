@@ -1,3 +1,0 @@
-# pipes
-
-Pipes puros: tmdb-image, year...
