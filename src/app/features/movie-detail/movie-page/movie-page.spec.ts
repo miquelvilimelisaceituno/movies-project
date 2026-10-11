@@ -1,8 +1,12 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import type { AppUser } from '../../../core/auth/app-user';
+import { Session } from '../../../core/auth/session';
 import { MovieDetails } from '../../../core/catalog/models/movie';
+import { Favorites, type FavoritesStatus } from '../../../core/favorites/favorites';
 import { MoviePage } from './movie-page';
 
 const alien: MovieDetails = {
@@ -22,10 +26,16 @@ const alien: MovieDetails = {
   videos: { results: [] },
 };
 
+const ana: AppUser = { uid: 'u1', email: 'ana@movies.dev', displayName: 'Ana', photoUrl: null };
+
 describe('MoviePage', () => {
   let fixture: ComponentFixture<MoviePage>;
   let http: HttpTestingController;
   let element: HTMLElement;
+  let user: ReturnType<typeof signal<AppUser | null | undefined>>;
+  let favoriteIds: ReturnType<typeof signal<number[]>>;
+  let favoritesStatus: ReturnType<typeof signal<FavoritesStatus>>;
+  let toggleFavorite: ReturnType<typeof vi.fn>;
 
   // Simula lo que hace el router: poner el :id de la URL en el input "id".
   const openUrlWithId = (id: string) => {
@@ -33,10 +43,36 @@ describe('MoviePage', () => {
     fixture.detectChanges();
   };
 
+  const showAlien = async () => {
+    openUrlWithId('348');
+    http.expectOne('/api/tmdb/movie/348').flush(alien);
+    await fixture.whenStable();
+  };
+  const favoriteButton = () =>
+    element.querySelector<HTMLButtonElement>('app-favorite-button button');
+
   beforeEach(() => {
+    user = signal<AppUser | null | undefined>(null);
+    favoriteIds = signal<number[]>([]);
+    favoritesStatus = signal<FavoritesStatus>('ready');
+    toggleFavorite = vi.fn().mockResolvedValue(undefined);
+
     TestBed.configureTestingModule({
       imports: [MoviePage],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([{ path: 'peliculas/:id', children: [] }]),
+        { provide: Session, useValue: { user } },
+        {
+          provide: Favorites,
+          useValue: {
+            status: favoritesStatus,
+            isFavorite: (id: number) => favoriteIds().includes(id),
+            toggleFavorite,
+          },
+        },
+      ],
     });
     http = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(MoviePage);
@@ -130,5 +166,80 @@ describe('MoviePage', () => {
     http.expectOne('/api/tmdb/movie/679').flush({ ...alien, id: 679, title: 'Aliens' });
     await fixture.whenStable();
     expect(element.querySelector('h1')?.textContent).toContain('Aliens');
+  });
+
+  describe('favorite', () => {
+    it('invites visitors to log in and come back to the movie', async () => {
+      await TestBed.inject(Router).navigateByUrl('/peliculas/348');
+      await showAlien();
+      expect(favoriteButton()).toBeNull();
+      const link = element.querySelector<HTMLAnchorElement>('.favorite a');
+      expect(link?.textContent).toContain('Inicia sesión para guardarla en favoritas');
+      expect(link?.getAttribute('href')).toBe('/iniciar-sesion?returnUrl=%2Fpeliculas%2F348');
+    });
+
+    it('shows nothing while the session is being restored', async () => {
+      user.set(undefined);
+      await showAlien();
+      expect(element.querySelector('.favorite')).toBeNull();
+    });
+
+    it('shows whether the movie is a favorite', async () => {
+      user.set(ana);
+      await showAlien();
+      expect(favoriteButton()?.getAttribute('aria-pressed')).toBe('false');
+
+      favoriteIds.set([348]);
+      await fixture.whenStable();
+      expect(favoriteButton()?.getAttribute('aria-pressed')).toBe('true');
+    });
+
+    it('saves the movie summary when the button is pressed', async () => {
+      user.set(ana);
+      await showAlien();
+      favoriteButton()?.click();
+      expect(toggleFavorite).toHaveBeenCalledWith({
+        tmdbId: 348,
+        title: 'Alien, el octavo pasajero',
+        posterPath: '/alien.jpg',
+        releaseDate: '1979-05-25',
+      });
+    });
+
+    it('ignores new clicks while a change is being saved', async () => {
+      user.set(ana);
+      toggleFavorite.mockReturnValue(new Promise(() => {}));
+      await showAlien();
+      favoriteButton()?.click();
+      favoriteButton()?.click();
+      expect(toggleFavorite).toHaveBeenCalledTimes(1);
+    });
+
+    it('disables the button while the favorites are loading', async () => {
+      user.set(ana);
+      favoritesStatus.set('loading');
+      await showAlien();
+      expect(favoriteButton()?.disabled).toBe(true);
+    });
+
+    it('explains when the favorites cannot be loaded', async () => {
+      user.set(ana);
+      favoritesStatus.set('error');
+      await showAlien();
+      expect(element.querySelector('.favorite [role="alert"]')?.textContent).toContain(
+        'No se han podido cargar tus favoritas.',
+      );
+    });
+
+    it('explains when the change cannot be saved', async () => {
+      user.set(ana);
+      toggleFavorite.mockRejectedValue(new Error('permission-denied'));
+      await showAlien();
+      favoriteButton()?.click();
+      await fixture.whenStable();
+      expect(element.querySelector('.favorite [role="alert"]')?.textContent).toContain(
+        'No se ha podido guardar el cambio.',
+      );
+    });
   });
 });

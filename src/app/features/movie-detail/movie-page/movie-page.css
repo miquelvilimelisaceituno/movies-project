@@ -38,6 +38,14 @@
   font-style: italic;
 }
 
+.favorite {
+  margin: 0 0 1rem;
+}
+
+.favorite__alert {
+  margin: 0.5rem 0 0;
+}
+
 .facts dt {
   font-weight: bold;
 }

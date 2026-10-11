@@ -46,3 +46,28 @@ Característica: Ficha de película
     Dado que estoy en la ficha de la película 348
     Cuando navego a /peliculas/679
     Entonces se cargan los datos de la película 679 sin recargar la aplicación
+
+  Escenario: Invitar a iniciar sesión para guardar favoritas
+    Dado que no he iniciado sesión
+    Cuando abro la ficha de la película 348
+    Entonces veo un enlace para iniciar sesión
+    Y al iniciar sesión vuelvo a /peliculas/348
+
+  Escenario: Marcar y desmarcar una favorita
+    Dado que he iniciado sesión
+    Y la película 348 no es favorita
+    Cuando pulso «Favorita»
+    Entonces se guarda con su título, póster y fecha de estreno
+    Y el botón aparece pulsado
+    Cuando lo pulso otra vez
+    Entonces deja de ser favorita
+
+  Escenario: Esperar a que carguen mis favoritas
+    Dado que he iniciado sesión
+    Y mis favoritas todavía están cargando
+    Entonces el botón «Favorita» está desactivado
+
+  Escenario: No se puede guardar el cambio
+    Dado que he iniciado sesión
+    Cuando pulso «Favorita» y Firestore rechaza el cambio
+    Entonces veo «No se ha podido guardar el cambio. Inténtalo de nuevo.»

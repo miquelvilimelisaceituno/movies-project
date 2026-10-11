@@ -78,7 +78,13 @@
     "rating": "Puntuación TMDB",
     "votes": "votos",
     "noVotes": "Sin votos",
-    "overview": "Sinopsis"
+    "overview": "Sinopsis",
+    "loginToFavorite": "Inicia sesión para guardarla en favoritas",
+    "favoritesLoadError": "No se han podido cargar tus favoritas.",
+    "favoriteSaveError": "No se ha podido guardar el cambio. Inténtalo de nuevo."
+  },
+  "favoriteButton": {
+    "label": "Favorita"
   },
   "credits": {
     "cast": "Reparto",
